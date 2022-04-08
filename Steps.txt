@@ -1,0 +1,11 @@
+Steps:
+
+1./ Create Git repo
+2./ List requirements
+3./ Build front End:
+-- create next app with tailwind flag
+--install sanity cli
+-- initialize sanity with coupon
+
+4./ Build and deploy smart contracts
+5./

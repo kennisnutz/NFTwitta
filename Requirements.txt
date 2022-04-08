@@ -1,0 +1,14 @@
+NFTWITTA REQUIREMENTS
+
+1./ Alchemy- RPC provider
+2./ NextJs- fronted Library
+3./ TailWind css- Styling
+4./ Sanity.io- Database
+5./ Solidity- smart contracts
+6. pinata- ipfs gateway
+7./ Hardhat- smart contract compilation and deployment
+8./ React Context API- state management
+9./ GROQ API- data querying
+10./ Vercel-- hosting
+11./ metamask - user authentication
+

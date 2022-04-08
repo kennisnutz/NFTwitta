@@ -1,7 +1,18 @@
-import { FiMoreHorizontal } from 'react-icons/fi'
-import { VscTwitter, vscTwitter } from 'react-icons/vsc'
+import { FiMoreHorizontal, FiBell } from 'react-icons/fi'
+import { VscTwitter } from 'react-icons/vsc'
 import SideBarOption from './SideBarOption'
 import { useState } from 'react'
+import { RiHome7Line, RiHome7Fill, RiFileList2Fill } from 'react-icons/ri'
+import { BiHash } from 'react-icons/bi'
+import { HiOutlineMail, HiMail } from 'react-icons/hi'
+import { FaRegListAlt, FaHashtag, FaBell } from 'react-icons/fa'
+import { CgMoreO } from 'react-icons/cg'
+import {
+  BsBookmarkFill,
+  BsBookmark,
+  BsPerson,
+  BsPersonFill,
+} from 'react-icons/bs'
 
 const style = {
   wrapper: `flex-[0.7] px-8 flex flex-col`,
@@ -27,19 +38,51 @@ function Sidebar({ initialSelectedIcon = 'Home' }) {
       </div>
       <div className={style.navContainer}>
         <SideBarOption
-          Icon={selected === 'Home' ? VscTwitter : VscTwitter}
+          Icon={selected === 'Home' ? RiHome7Fill : RiHome7Line}
           text="Home"
           isActive={Boolean(selected === 'Home')}
-          setSelected={selected}
+          setSelected={setSelected}
           redirect={'/'}
         />
-        <div>Explore</div>
-        <div>Notifications</div>
-        <div>Messages</div>
-        <div>Bookmarks</div>
-        <div>Lists</div>
-        <div>Profile</div>
-        <div>More</div>
+        <SideBarOption
+          Icon={selected === 'Explore' ? FaHashtag : BiHash}
+          text="Explore"
+          isActive={Boolean(selected === 'Explore')}
+          setSelected={setSelected}
+        />
+        <SideBarOption
+          Icon={selected === 'Notification' ? FaBell : FiBell}
+          text="Notification"
+          isActive={Boolean(selected === 'Notification')}
+          setSelected={setSelected}
+        />
+        <SideBarOption
+          Icon={selected === 'Messages' ? HiMail : HiOutlineMail}
+          text="Messages"
+          isActive={Boolean(selected === 'Messages')}
+          setSelected={setSelected}
+        />
+        <SideBarOption
+          Icon={selected === 'Bookmarks' ? BsBookmarkFill : BsBookmark}
+          text="Bookmarks"
+          isActive={Boolean(selected === 'Bookmarks')}
+          setSelected={setSelected}
+        />
+
+        <SideBarOption
+          Icon={selected === 'Lists' ? RiFileList2Fill : FaRegListAlt}
+          text="Lists"
+          isActive={Boolean(selected === 'Lists')}
+          setSelected={setSelected}
+        />
+        <SideBarOption
+          Icon={selected === 'Profile' ? BsPersonFill : BsPerson}
+          text="Profile"
+          isActive={Boolean(selected === 'Profile')}
+          setSelected={setSelected}
+          redirect={'/profile'}
+        />
+        <SideBarOption Icon={CgMoreO} text="More" setSelected={setSelected} />
         <div className={style.tweetButton}>Mint</div>
       </div>
       <div className={style.profileButton}>

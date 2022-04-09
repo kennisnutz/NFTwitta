@@ -1,3 +1,4 @@
+import { Link } from 'next/link'
 import { FiMoreHorizontal, FiBell } from 'react-icons/fi'
 import { VscTwitter } from 'react-icons/vsc'
 import SideBarOption from './SideBarOption'

@@ -51,7 +51,17 @@ const ProfileTweets = () => {
     <div className={style.wrapper}>
       {tweets.map((tweet, index) => (
         <div>
-          <Post />
+          <Post
+            key={index}
+            displayName="kenny$$hillz"
+            userName={`${tweet.userName.slice(0, 4)}..${tweet.userName.slice(
+              -4
+            )}`}
+            text={tweet.text}
+            avatar={tweet.avatar}
+            isProfileImageNft={tweet.isProfileImageNft}
+            timestamp={tweet.timestamp}
+          />
         </div>
       ))}
     </div>

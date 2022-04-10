@@ -12,3 +12,4 @@ NFTWITTA REQUIREMENTS
 10./ Vercel-- hosting
 11./ metamask - user authentication
 
+contract address: 0xEa92D58DD2a7989c0c294343D5f342DE79d422d3

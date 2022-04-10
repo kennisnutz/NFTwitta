@@ -1,0 +1,12 @@
+1./ after connecting with metamask, app doesnt desplay home page, instead it gets stuck on the loading 
+UI.
+
+
+Fix:
+error was due to incorrect syntax in .env.local file where the api_token was not assigned properly
+
+
+2./ Sanity data base not displaying author value in "author" field
+
+Fix:
+changed miss-matched variable name for currentAccountId in NFTTwittaContext.js and currentAccount in TweetBox.js 

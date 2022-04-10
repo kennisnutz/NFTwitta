@@ -9,7 +9,7 @@ import { useContext } from 'react'
 import { NFTTwittaContext } from '../context/NFTTwittaContext'
 
 const style = {
-  wrapper: `flex h-full justify-center h-screen w-screen select-none bg-[#15202b] text-white`,
+  wrapper: `flex h-full justify-center  w-screen select-none bg-[#15202b] text-white`,
   content: `max-w-[1400px] w-3/3 flex justify-between `,
   loginContainer: `w-full h-full flex flex-col justify-center items-center pb-48`,
   walletConnectButton: `text-2xl text-black bg-white font-bold mb-[-3rem] mt-[3rem] px-6 py-4 rounded-full cursor-pointer hover:bg-[#d7dbdc]`,

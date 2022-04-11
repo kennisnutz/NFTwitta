@@ -1,5 +1,7 @@
 import React from 'react'
 import Post from '../Post'
+import { useContext } from 'react'
+import { NFTTwittaContext } from '../../context/NFTTwittaContext'
 
 const style = {
   wrapper: `no-scrollbar`,
@@ -7,58 +9,29 @@ const style = {
   headerTitle: `text-xl font-bold`,
 }
 
-const tweets = [
-  {
-    displayName: 'Kenny$$Rekt',
-    userName: '0xfe6589068cde0f0733294BD3e76877bA58Db29d9',
-    avatar:
-      'https://pbs.twimg.com/profile_images/1461791690742710280/cm1V7cin_400x400.jpg',
-    text: 'I dey',
-    isProfileImageNft: false,
-    timestamp: '2022-04-09T09:00:33.000Z',
-  },
-  {
-    displayName: 'Kenny$$Rekt',
-    userName: '0xfe6589068cde0f0733294BD3e76877bA58Db29d9',
-    avatar:
-      'https://pbs.twimg.com/profile_images/1461791690742710280/cm1V7cin_400x400.jpg',
-    text: 'I dey',
-    isProfileImageNft: false,
-    timestamp: '2022-04-09T09:00:33.000Z',
-  },
-  {
-    displayName: 'Kenny$$Rekt',
-    userName: '0xfe6589068cde0f0733294BD3e76877bA58Db29d9',
-    avatar:
-      'https://pbs.twimg.com/profile_images/1461791690742710280/cm1V7cin_400x400.jpg',
-    text: 'I dey',
-    isProfileImageNft: false,
-    timestamp: '2022-04-09T09:00:33.000Z',
-  },
-  {
-    displayName: 'Kenny$$Rekt',
-    userName: '0xfe6589068cde0f0733294BD3e76877bA58Db29d9',
-    avatar:
-      'https://pbs.twimg.com/profile_images/1461791690742710280/cm1V7cin_400x400.jpg',
-    text: 'I dey',
-    isProfileImageNft: false,
-    timestamp: '2022-04-09T09:00:33.000Z',
-  },
-]
-
 const ProfileTweets = () => {
+  const { currentAccountId, currentUser } = useContext(NFTTwittaContext)
+
   return (
     <div className={style.wrapper}>
-      {tweets.map((tweet, index) => (
+      {currentUser.tweets?.map((tweet, index) => (
         <div>
           <Post
             key={index}
-            displayName="kenny$$hillz"
-            userName={`${tweet.userName.slice(0, 4)}..${tweet.userName.slice(
-              -4
-            )}`}
-            text={tweet.text}
-            avatar={tweet.avatar}
+            displayName={
+              currentUser.name === 'Unnamed'
+                ? `${currentUser.walletAddress.slice(
+                    0,
+                    4
+                  )}...${currentUser.walletAddress.slice(-4)}`
+                : currentUser.name
+            }
+            userName={`${currentAccountId.slice(
+              0,
+              4
+            )}..${currentAccountId.slice(-4)}`}
+            text={tweet.tweet}
+            avatar={currentUser.profileImage}
             isProfileImageNft={tweet.isProfileImageNft}
             timestamp={tweet.timestamp}
           />

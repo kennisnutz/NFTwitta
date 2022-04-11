@@ -1,6 +1,8 @@
 import { useRouter } from 'next/router'
 import React from 'react'
 import { BsArrowLeftShort } from 'react-icons/bs'
+import { useContext } from 'react'
+import { NFTTwittaContext } from '../../context/NFTTwittaContext'
 
 const style = {
   wrapper: `border-[#38444d] border-b`,
@@ -21,8 +23,9 @@ const style = {
 
 const ProfileHeader = () => {
   const isProfileImageNft = false
-  const currentAccount = '0xfe6589068cde0f0733294BD3e76877bA58Db29d9'
+  const { currentAccountId, currentUser } = useContext(NFTTwittaContext)
   const router = useRouter()
+
   return (
     <div className={style.wrapper}>
       <div className={style.header}>
@@ -30,13 +33,17 @@ const ProfileHeader = () => {
           <BsArrowLeftShort />
         </div>
         <div className={style.details}>
-          <div className={style.primary}>Kenny$$hillz</div>
-          <div className={style.secondary}>3 tweets</div>
+          <div className={style.primary}>{currentUser.name}</div>
+          <div className={style.secondary}>
+            {currentUser.tweets?.length}
+            {''}
+            {currentUser.tweets?.length === 1 ? 'Tweet' : 'Tweets'}
+          </div>
         </div>
       </div>
       <div className={style.coverPhotoContainer}>
         <img
-          src="https://www.hipi.info/wp-content/uploads/2014/06/1500x500-colorful-twitter-header-19-1024x341.jpg"
+          src={currentUser.coverImage}
           alt="image"
           className={style.coverPhoto}
         />
@@ -46,7 +53,7 @@ const ProfileHeader = () => {
           className={isProfileImageNft ? 'hex' : style.profileImageContainer}
         >
           <img
-            src="https://pbs.twimg.com/profile_images/1461791690742710280/cm1V7cin_400x400.jpg"
+            src={currentUser.profileImage}
             alt=""
             className={
               isProfileImageNft ? style.profileImageNft : style.profileImage
@@ -56,12 +63,12 @@ const ProfileHeader = () => {
       </div>
       <div className={style.details}>
         <div>
-          <div className={style.primary}>Kenny$$hillz</div>
+          <div className={style.primary}>{currentUser.name}</div>
         </div>
         <div className={style.secondary}>
-          {currentAccount && (
+          {currentAccountId && (
             <>
-              @{currentAccount.slice(0, 4)}...{currentAccount.slice(-4)}
+              @{currentAccountId.slice(0, 4)}...{currentAccountId.slice(-4)}
             </>
           )}
         </div>

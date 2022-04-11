@@ -17,6 +17,11 @@ export const NFTTwittaProvider = ({ children }) => {
     checkIfWalletIsConnected()
   }, [])
 
+  useEffect(() => {
+    if (!currentAccountId || appStatus !== 'connected') return
+    getCurrentAccount(currentAccountId)
+    fetchTweets()
+  }, [currentAccountId, appStatus])
   /**
    * Checks if there is an active wallet connection
    */
@@ -90,11 +95,11 @@ export const NFTTwittaProvider = ({ children }) => {
   }
   const fetchTweets = async () => {
     const query = `
-    *[_type == "tweets"]{
-      "author": author->{name, walletAddress, profileImage, isProfileImageNft},
-      tweet,
-      timestamp,
-    }|order(timestamp desc)
+      *[_type == "tweets"]{
+        "author": author->{name, walletAddress, profileImage, isProfileImageNft},
+        tweet,
+        timestamp
+      }|order(timestamp desc)
     `
     const sanityResponse = await client.fetch(query)
 
@@ -118,15 +123,15 @@ export const NFTTwittaProvider = ({ children }) => {
     if (appStatus !== 'connected') return
 
     const query = `
-      *[_type-- "users" && _id == "${userAccount}"]{
-        "tweets": tweets[]->{timestamp, tweet}|order(timestamp desc),
-        name,
-        profileImage,
-        isProfileImagNft,
-        coverImage,
-        walletAddress
-      }
-    `
+    *[_type == "users" && _id == "${userAccount}"]{
+      "tweets": tweets[]->{timestamp, tweet}|order(timestamp desc),
+      name,
+      profileImage,
+      isProfileImageNft,
+      coverImage,
+      walletAddress
+    }
+  `
 
     const sanityResponse = await client.fetch(query)
 

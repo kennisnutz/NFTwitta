@@ -1,8 +1,7 @@
-import { Link } from 'next/link'
 import { FiMoreHorizontal, FiBell } from 'react-icons/fi'
 import { VscTwitter } from 'react-icons/vsc'
 import SideBarOption from './SideBarOption'
-import { useState } from 'react'
+import ProfileImageMinter from './profile/mintingModal/profileImageMinter'
 import { RiHome7Line, RiHome7Fill, RiFileList2Fill } from 'react-icons/ri'
 import { BiHash } from 'react-icons/bi'
 import { HiOutlineMail, HiMail } from 'react-icons/hi'
@@ -14,6 +13,12 @@ import {
   BsPerson,
   BsPersonFill,
 } from 'react-icons/bs'
+import Modal from 'react-modal'
+import { useRouter } from 'next/router'
+import { useContext, useState } from 'react'
+import { NFTTwittaContext } from '../context/NFTTwittaContext'
+import { route } from 'next/dist/server/router'
+import { customStyles } from '../lib/constants'
 
 const style = {
   wrapper: `flex-[0.7] px-8 flex flex-col`,
@@ -32,6 +37,9 @@ const style = {
 
 function Sidebar({ initialSelectedIcon = 'Home' }) {
   const [selected, setSelected] = useState('Home')
+  const router = useRouter()
+  const { currentAccountId, currentUser } = useContext(NFTTwittaContext)
+
   return (
     <div className={style.wrapper}>
       <div className={style.twitterIconContainer}>
@@ -84,20 +92,49 @@ function Sidebar({ initialSelectedIcon = 'Home' }) {
           redirect={'/profile'}
         />
         <SideBarOption Icon={CgMoreO} text="More" setSelected={setSelected} />
-        <div className={style.tweetButton}>Mint</div>
+        <div
+          onClick={() => {
+            router.push(`${router.pathname}/?mint= ${currentAccountId}`)
+          }}
+          className={style.tweetButton}
+        >
+          Mint
+        </div>
       </div>
       <div className={style.profileButton}>
-        <div className={style.profileLeft}></div>
+        <div className={style.profileLeft}>
+          <img
+            src={currentUser.profileImage}
+            alt={`${currentUser.name}`}
+            className={
+              currentUser.isProfileImageNft
+                ? `${style.profileImage} smallHex`
+                : style.profileImage
+            }
+          />
+        </div>
         <div className={style.profileRight}>
           <div className={style.details}>
-            <div className={style.name}>Kenny$$hillz</div>
-            <div className={style.handle}>@0x82083...56c4jH839</div>
+            <div className={style.name}>{currentUser.name}</div>
+            <div className={style.handle}>
+              @
+              {`${currentAccountId.slice(0, 4)}...${currentAccountId.slice(
+                -4
+              )}`}
+            </div>
           </div>
           <div className={style.moreContainer}>
             <FiMoreHorizontal />
           </div>
         </div>
       </div>
+      <Modal
+        isOpen={Boolean(router.query.mint)}
+        onRequestClose={() => router.back}
+        style={customStyles}
+      >
+        <ProfileImageMinter />
+      </Modal>
     </div>
   )
 }

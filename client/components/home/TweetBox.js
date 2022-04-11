@@ -24,7 +24,7 @@ const style = {
 
 const TweetBox = () => {
   const [tweetMessage, setTweetMessage] = useState('')
-  const { currentAccountId } = useContext(NFTTwittaContext)
+  const { currentAccountId, currentUser, tweets } = useContext(NFTTwittaContext)
 
   const postTweet = async (event) => {
     event.preventDefault()
@@ -64,9 +64,13 @@ const TweetBox = () => {
     <div className={style.wrapper}>
       <div className={style.tweetBoxLeft}>
         <img
-          src="https://pbs.twimg.com/profile_images/1461791690742710280/cm1V7cin_400x400.jpg"
+          src={currentUser.profileImage}
           alt="profile Image"
-          className={style.profileImage}
+          className={
+            currentUser.isProfileImageNft
+              ? `${style.profileImage} smallHex`
+              : style.profileImage
+          }
         />
       </div>
       <div className={style.tweetBoxRight}>

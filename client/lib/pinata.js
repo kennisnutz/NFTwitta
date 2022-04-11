@@ -4,8 +4,7 @@ const secret = process.env.NEXT_PUBLIC_PINATA_API_SECRET
 import axios from 'axios'
 
 export const pinJSONToIPFS = async (json) => {
-  const url = 'https://api.pinata.cloud/pinning/pinJSONToIPFS'
-
+  const url = `https://api.pinata.cloud/pinning/pinJSONToIPFS`
   return axios
     .post(url, json, {
       headers: {
@@ -13,27 +12,27 @@ export const pinJSONToIPFS = async (json) => {
         pinata_secret_api_key: secret,
       },
     })
-    .then((response) => {
+    .then(function (response) {
       return response.data.IpfsHash
     })
-    .catch((error) => {
+    .catch(function (error) {
       console.log(error)
     })
 }
 
-export const pinFileToIPFS = async (file, pinataMetadata) => {
-  const url = 'https://api.pinata.cloud/pinning/pinFileToIPFS'
+export const pinFileToIPFS = async (file, pinataMetaData) => {
+  const url = `https://api.pinata.cloud/pinning/pinFileToIPFS`
 
   let data = new FormData()
 
   data.append('file', file)
-  data.append('pinataMetadata', JSON.stringify(pinataMetadata))
+  data.append('pinataMetadata', JSON.stringify(pinataMetaData))
 
   return axios
     .post(url, data, {
-      maxBodyLength: Infinity,
+      maxBodyLength: 'Infinity',
       headers: {
-        'Content-Type': `multipat/form-data; boundary=${data._boundary}`,
+        'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
         pinata_api_key: key,
         pinata_secret_api_key: secret,
       },
@@ -41,7 +40,7 @@ export const pinFileToIPFS = async (file, pinataMetadata) => {
     .then(function (response) {
       return response.data.IpfsHash
     })
-    .catch((error) => {
+    .catch(function (error) {
       console.log(error)
     })
 }

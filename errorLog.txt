@@ -10,3 +10,21 @@ error was due to incorrect syntax in .env.local file where the api_token was not
 
 Fix:
 changed miss-matched variable name for currentAccountId in NFTTwittaContext.js and currentAccount in TweetBox.js 
+
+
+3./ when app is deployed it displays an error which states that the "profileImage" parameter in the 'item.author.profileImage'
+attribute from  the code block on line 117 of NFTTwittaContext.js file is undefined: (TypeError: Cannot read properties of undefined (reading 'profileImage'))
+Fix: deleted the erroneous content from database
+
+
+4./ after clicking on mint function, the modal gets stuck on the loading screen display instead of switching to the checkmark indicating successful completion of
+the mint function even though minting is successful
+ POTENTIAL FIXES
+  1./ Play with switch statement-:> change defualt case (..read about switch statement)
+  2./ 
+Fix 
+used try catch block in profileminter.js file when sending the transaction via metamask
+
+5./ need to add form and function for uploading coverImages {editProfile} in profile section
+
+6./

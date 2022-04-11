@@ -20,7 +20,11 @@
     "**/*.ts",
     "**/*.tsx",
     "pages/index.js",
-    "pages/_app.js"
+    "pages/_app.js",
+    "components/mintingModal/FinishedState.js",
+    "components/mintingModal/InitialState.js",
+    "components/mintingModal/LoadingState.js",
+    "components/mintingModal/profileImageMinter.js"
   ],
   "exclude": ["node_modules"]
 }

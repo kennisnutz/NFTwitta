@@ -19,7 +19,7 @@ export const NFTTwittaProvider = ({ children }) => {
 
   useEffect(() => {
     if (!currentAccountId || appStatus !== 'connected') return
-    getCurrentAccount(currentAccountId)
+    getCurrentUserDetails(currentAccountId)
     fetchTweets()
   }, [currentAccountId, appStatus])
   /**
@@ -93,6 +93,15 @@ export const NFTTwittaProvider = ({ children }) => {
       setAppStatus('error')
     }
   }
+
+  const getNftProfileImage = async (imageUri, isNft) => {
+    if (isNft) {
+      return `https://gateway.pinata.cloud/ipfs/${imageUri}`
+    } else if (!isNft) {
+      return imageUri
+    }
+  }
+
   const fetchTweets = async () => {
     const query = `
       *[_type == "tweets"]{
@@ -106,20 +115,29 @@ export const NFTTwittaProvider = ({ children }) => {
     setTweets([])
 
     sanityResponse.forEach(async (item) => {
-      const newItem = {
-        tweet: item.tweet,
-        timestamp: item.timestamp,
-        author: {
-          name: item.author.name,
-          walletAddress: item.author.walletAddress,
-          isProfileImageNft: item.author.isProfileImageNft,
-          profileImage: item.author.profileImage,
-        },
+      const profileImageUrl = await getNftProfileImage(
+        item.author.profileImage,
+        item.author.isProfileImageNft
+      )
+
+      if (item.author.isProfileImageNft) {
+        const newItem = {
+          tweet: item.tweet,
+          timestamp: item.timestamp,
+          author: {
+            name: item.author.name,
+            walletAddress: item.author.walletAddress,
+            profileImage: profileImageUrl,
+            isProfileImageNft: item.author.isProfileImageNft,
+          },
+        }
+        setTweets((prevState) => [...prevState, newItem])
+      } else {
+        setTweets((prevState) => [...prevState, item])
       }
-      setTweets((prevState) => [...prevState, newItem])
     })
   }
-  const getCurrentAccount = async (userAccount = currentAccountId) => {
+  const getCurrentUserDetails = async (userAccount = currentAccountId) => {
     if (appStatus !== 'connected') return
 
     const query = `
@@ -135,10 +153,15 @@ export const NFTTwittaProvider = ({ children }) => {
 
     const sanityResponse = await client.fetch(query)
 
+    const profileImageUri = await getNftProfileImage(
+      sanityResponse[0].profileImage,
+      sanityResponse[0].isProfileImageNft
+    )
+
     setCurrentUser({
       tweets: sanityResponse[0].tweets,
       name: sanityResponse[0].name,
-      profileImage: sanityResponse[0].profileImage,
+      profileImage: profileImageUri,
       isProfileImageNft: sanityResponse[0].isProfileImageNft,
       coverImage: sanityResponse[0].coverImage,
       walletAddress: sanityResponse[0].walletAddress,
@@ -153,7 +176,9 @@ export const NFTTwittaProvider = ({ children }) => {
         connectToWallet,
         fetchTweets,
         tweets,
+        getNftProfileImage,
         currentUser,
+        getCurrentUserDetails,
       }}
     >
       {children}

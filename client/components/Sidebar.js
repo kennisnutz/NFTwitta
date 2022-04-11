@@ -1,7 +1,7 @@
 import { FiMoreHorizontal, FiBell } from 'react-icons/fi'
 import { VscTwitter } from 'react-icons/vsc'
 import SideBarOption from './SideBarOption'
-import ProfileImageMinter from './profile/mintingModal/profileImageMinter'
+import ProfileImageMinter from './mintingModal/profileImageMinter'
 import { RiHome7Line, RiHome7Fill, RiFileList2Fill } from 'react-icons/ri'
 import { BiHash } from 'react-icons/bi'
 import { HiOutlineMail, HiMail } from 'react-icons/hi'
@@ -17,7 +17,6 @@ import Modal from 'react-modal'
 import { useRouter } from 'next/router'
 import { useContext, useState } from 'react'
 import { NFTTwittaContext } from '../context/NFTTwittaContext'
-import { route } from 'next/dist/server/router'
 import { customStyles } from '../lib/constants'
 
 const style = {
